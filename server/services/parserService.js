@@ -9,12 +9,34 @@ const extractRawText = async (filePath, fileType) => {
   const ext = fileType.toLowerCase();
 
   if (ext.includes('pdf')) {
-    const dataBuffer = fs.readFileSync(filePath);
-    const parsed = await pdfParse(dataBuffer);
-    return parsed.text || '';
+    try {
+      const dataBuffer = fs.readFileSync(filePath);
+      const pdfModule = require('pdf-parse');
+
+      if (typeof pdfModule === 'function') {
+        const parsed = await pdfModule(dataBuffer);
+        return parsed.text || '';
+      } else if (pdfModule && pdfModule.PDFParse) {
+        const parser = new pdfModule.PDFParse(new Uint8Array(dataBuffer));
+        const parsed = await parser.getText();
+        return parsed.text || '';
+      } else if (pdfModule && typeof pdfModule.default === 'function') {
+        const parsed = await pdfModule.default(dataBuffer);
+        return parsed.text || '';
+      }
+    } catch (pdfErr) {
+      console.warn('[PDF Parser Warning]', pdfErr.message);
+      const rawBuf = fs.readFileSync(filePath);
+      return rawBuf.toString('utf8').replace(/[^\x20-\x7E\n\r\t]/g, ' ');
+    }
   } else if (ext.includes('docx') || ext.includes('doc')) {
-    const result = await mammoth.extractRawText({ path: filePath });
-    return result.value || '';
+    try {
+      const result = await mammoth.extractRawText({ path: filePath });
+      return result.value || '';
+    } catch (docErr) {
+      console.warn('[DOCX Parser Warning]', docErr.message);
+      return fs.readFileSync(filePath, 'utf8');
+    }
   } else if (ext.includes('txt')) {
     return fs.readFileSync(filePath, 'utf8');
   } else if (ext.includes('image') || ext.includes('png') || ext.includes('jpg') || ext.includes('jpeg')) {
