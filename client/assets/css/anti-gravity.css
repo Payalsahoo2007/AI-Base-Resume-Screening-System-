@@ -126,7 +126,7 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-/* Floating Keyframe Animations */
+/* Floating & Entrance Keyframe Animations */
 .anti-gravity-float {
   animation: antiGravityFloat 6s ease-in-out infinite alternate;
 }
@@ -134,6 +134,62 @@ body {
 @keyframes antiGravityFloat {
   0% { transform: translateY(0px); }
   100% { transform: translateY(-10px); }
+}
+
+.fade-in-up {
+  animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInSlideUp {
+  0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.fade-in-view {
+  animation: fadeInView 0.35s ease forwards;
+}
+
+@keyframes fadeInView {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Pulsing Badge & Score Glow */
+.pulse-glow-cyan { animation: pulseCyan 2s infinite alternate; }
+.pulse-glow-emerald { animation: pulseEmerald 2s infinite alternate; }
+.pulse-glow-rose { animation: pulseRose 2s infinite alternate; }
+
+@keyframes pulseCyan {
+  0% { box-shadow: 0 0 10px rgba(0, 243, 255, 0.3); }
+  100% { box-shadow: 0 0 25px rgba(0, 243, 255, 0.8), 0 0 40px rgba(0, 243, 255, 0.4); }
+}
+
+@keyframes pulseEmerald {
+  0% { box-shadow: 0 0 10px rgba(0, 255, 157, 0.3); }
+  100% { box-shadow: 0 0 25px rgba(0, 255, 157, 0.8), 0 0 40px rgba(0, 255, 157, 0.4); }
+}
+
+@keyframes pulseRose {
+  0% { box-shadow: 0 0 10px rgba(255, 42, 109, 0.3); }
+  100% { box-shadow: 0 0 25px rgba(255, 42, 109, 0.8), 0 0 40px rgba(255, 42, 109, 0.4); }
+}
+
+/* Smooth Progress Bar Fill */
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Pop-in Keyword Tags */
+.pop-in-tag {
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 /* Custom Scrollbars */

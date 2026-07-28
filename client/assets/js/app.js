@@ -38,8 +38,12 @@ const App = {
     views.forEach(view => {
       if (view.id === `view-${tabId}`) {
         view.style.display = 'block';
+        view.classList.remove('fade-in-view');
+        void view.offsetWidth; // Trigger reflow
+        view.classList.add('fade-in-view');
       } else {
         view.style.display = 'none';
+        view.classList.remove('fade-in-view');
       }
     });
 

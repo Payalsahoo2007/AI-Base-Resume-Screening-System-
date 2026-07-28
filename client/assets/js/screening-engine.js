@@ -81,64 +81,71 @@ const ScreeningEngine = {
     const container = document.getElementById('ai-match-results-container');
     if (!container) return;
 
-    const recColor = match.aiAnalysis?.hiringRecommendation === 'Strong Hire' || match.aiAnalysis?.hiringRecommendation === 'Hire'
-      ? 'badge-emerald' : (match.aiAnalysis?.hiringRecommendation === 'Consider' ? 'badge-cyan' : 'badge-rose');
+    const rec = match.aiAnalysis?.hiringRecommendation || 'Hire';
+    let recBadgeClass = 'badge-cyan pulse-glow-cyan';
+    if (rec === 'Strong Hire' || rec === 'Hire') recBadgeClass = 'badge-emerald pulse-glow-emerald';
+    if (rec === 'Reject') recBadgeClass = 'badge-rose pulse-glow-rose';
+
+    const skillScore = match.scoreBreakdown?.skillMatchScore || 85;
+    const kwScore = match.scoreBreakdown?.keywordMatchScore || 80;
+    const expScore = match.scoreBreakdown?.experienceMatchScore || 90;
+    const targetScore = match.overallMatchScore || 75;
 
     container.innerHTML = `
-      <div class="grid-2" style="margin-top: 24px;">
+      <div class="grid-2 fade-in-up" style="margin-top: 24px;">
         <!-- Left Column: ATS Score Gauge & Skill Heatmap -->
         <div class="glass-panel" style="padding: 24px;">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <h3 style="font-size: 18px; color: #fff;">AI Compatibility Breakdown</h3>
-            <span class="badge ${recColor}" style="font-size: 14px;">Recommendation: ${match.aiAnalysis?.hiringRecommendation || 'Hire'}</span>
+            <span class="badge ${recBadgeClass}" style="font-size: 14px; padding: 6px 14px;">Recommendation: ${rec}</span>
           </div>
 
           <div style="text-align: center; margin: 30px 0;">
-            <div style="font-size: 56px; font-weight: 800; font-family: var(--font-heading);" class="text-gradient">
-              ${match.overallMatchScore}%
+            <div id="anim-overall-score" style="font-size: 56px; font-weight: 800; font-family: var(--font-heading);" class="text-gradient">
+              0%
             </div>
-            <p style="color: var(--text-secondary); font-size: 13px; text-transform: uppercase;">Overall AI Match Score</p>
+            <p style="color: var(--text-secondary); font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Overall AI Match Score</p>
           </div>
 
-          <!-- Score Metrics Bars -->
-          <div style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- Animated Score Metrics Bars -->
+          <div style="display: flex; flex-direction: column; gap: 14px;">
             <div>
-              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
                 <span>Skill Match</span>
-                <span class="text-cyan">${match.scoreBreakdown?.skillMatchScore || 85}%</span>
+                <span class="text-cyan">${skillScore}%</span>
               </div>
-              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
-                <div style="width: ${match.scoreBreakdown?.skillMatchScore || 85}%; height: 100%; background: var(--color-cyan);"></div>
+              <div style="height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden;">
+                <div id="bar-skill-match" class="progress-bar-fill" style="background: var(--color-cyan);"></div>
               </div>
             </div>
 
             <div>
-              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
                 <span>Keyword Match & Density</span>
-                <span class="text-violet">${match.scoreBreakdown?.keywordMatchScore || 80}%</span>
+                <span class="text-violet">${kwScore}%</span>
               </div>
-              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
-                <div style="width: ${match.scoreBreakdown?.keywordMatchScore || 80}%; height: 100%; background: var(--color-violet);"></div>
+              <div style="height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden;">
+                <div id="bar-kw-match" class="progress-bar-fill" style="background: var(--color-violet);"></div>
               </div>
             </div>
 
             <div>
-              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
                 <span>Experience Seniority Alignment</span>
-                <span class="text-emerald">${match.scoreBreakdown?.experienceMatchScore || 90}%</span>
+                <span class="text-emerald">${expScore}%</span>
               </div>
-              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
-                <div style="width: ${match.scoreBreakdown?.experienceMatchScore || 90}%; height: 100%; background: var(--color-emerald);"></div>
+              <div style="height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden;">
+                <div id="bar-exp-match" class="progress-bar-fill" style="background: var(--color-emerald);"></div>
               </div>
             </div>
           </div>
 
-          <!-- Keyword Heatmap -->
-          <div style="margin-top: 24px;">
-            <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">Keyword Heatmap Matrix</h4>
+          <!-- Staggered Keyword Heatmap -->
+          <div style="margin-top: 28px;">
+            <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Keyword Heatmap Matrix</h4>
             <div>
-              ${(match.matchingSkills || []).map(s => `<span class="keyword-tag tag-match">✓ ${s}</span>`).join('')}
-              ${(match.missingSkills || []).map(s => `<span class="keyword-tag tag-missing">✗ ${s}</span>`).join('')}
+              ${(match.matchingSkills || []).map((s, idx) => `<span class="keyword-tag tag-match pop-in-tag" style="animation-delay: ${idx * 0.08}s;">✓ ${s}</span>`).join('')}
+              ${(match.missingSkills || []).map((s, idx) => `<span class="keyword-tag tag-missing pop-in-tag" style="animation-delay: ${(match.matchingSkills?.length || 0) * 0.08 + idx * 0.08}s;">✗ ${s}</span>`).join('')}
             </div>
           </div>
         </div>
@@ -170,11 +177,40 @@ const ScreeningEngine = {
               <i class="fas fa-comments"></i> AI-Generated Interview Questions
             </h4>
             <ul style="list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: var(--text-secondary);">
-              ${(match.aiAnalysis?.interviewQuestions || []).map(q => `<li style="background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 8px; border-left: 2px solid var(--color-cyan);">"${q}"</li>`).join('')}
+              ${(match.aiAnalysis?.interviewQuestions || []).map(q => `<li style="background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--color-cyan); transition: all 0.3s ease;" class="pop-in-tag">"${q}"</li>`).join('')}
             </ul>
           </div>
         </div>
       </div>
     `;
+
+    // Trigger smooth progress bar growth & counter animation after DOM insertion
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const barSkill = document.getElementById('bar-skill-match');
+        const barKw = document.getElementById('bar-kw-match');
+        const barExp = document.getElementById('bar-exp-match');
+
+        if (barSkill) barSkill.style.width = `${skillScore}%`;
+        if (barKw) barKw.style.width = `${kwScore}%`;
+        if (barExp) barExp.style.width = `${expScore}%`;
+
+        // Animate counter
+        const counterEl = document.getElementById('anim-overall-score');
+        if (counterEl) {
+          let current = 0;
+          const step = Math.max(1, Math.ceil(targetScore / 30));
+          const timer = setInterval(() => {
+            current += step;
+            if (current >= targetScore) {
+              counterEl.textContent = `${targetScore}%`;
+              clearInterval(timer);
+            } else {
+              counterEl.textContent = `${current}%`;
+            }
+          }, 25);
+        }
+      }, 50);
+    });
   }
 };
