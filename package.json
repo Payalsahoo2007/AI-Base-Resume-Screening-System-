@@ -1,0 +1,34 @@
+{
+  "name": "anti-gravity-ai-resume-screening",
+  "version": "1.0.0",
+  "description": "Futuristic Anti-Gravity AI Resume Screening Platform",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "keywords": [
+    "ai",
+    "resume-parser",
+    "ats-screening",
+    "anti-gravity-ui",
+    "recruitment",
+    "hr-tech"
+  ],
+  "author": "DeepMind AI Engineer",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.1",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mammoth": "^1.12.0",
+    "mongoose": "^9.8.1",
+    "multer": "^2.2.0",
+    "openai": "^7.0.0",
+    "pdf-parse": "^2.4.5"
+  }
+}
