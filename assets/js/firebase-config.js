@@ -8,7 +8,7 @@ const firebaseConfig = {
   projectId: "ai-base-resume-8f9de",
   storageBucket: "ai-base-resume-8f9de.firebasestorage.app",
   messagingSenderId: "849157977517",
-  appId: "1:849157977517:web:0ca75c1980090e78959d24"
+  appId: "1:849157977517:web:0da9ffdb50024ca5959d24"
 };
 
 if (typeof window !== 'undefined') {
