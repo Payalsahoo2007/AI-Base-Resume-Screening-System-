@@ -50,9 +50,10 @@ app.get(/.*/, (req, res, next) => {
 // Centralized Error Handling Middleware
 app.use(errorHandler);
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`
+// Start Server if executed directly (e.g. npm start / node server/index.js)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`
   =============================================================
   🚀 ANTI-GRAVITY AI RESUME SCREENING PLATFORM IS ONLINE!
   =============================================================
@@ -61,4 +62,7 @@ app.listen(PORT, () => {
   ► AI Engine:     ${process.env.OPENAI_API_KEY ? 'OpenAI GPT-4o Integration' : 'Built-in Rule-Based NLP Engine'}
   =============================================================
   `);
-});
+  });
+}
+
+module.exports = app;
