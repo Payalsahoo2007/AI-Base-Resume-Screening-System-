@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anti-Gravity | Enterprise AI Resume Screening Platform</title>
+  
+  <!-- FontAwesome Icons & Chart.js CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Anti-Gravity CSS Theme System -->
+  <link rel="stylesheet" href="assets/css/anti-gravity.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+</head>
+<body>
+
+  <!-- Ambient Cosmic Nebulae -->
+  <div class="nebula-blob nebula-1"></div>
+  <div class="nebula-blob nebula-2"></div>
+
+  <div id="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar-ag">
+      <div class="brand-logo">
+        <div class="brand-icon">
+          <i class="fas fa-atom"></i>
+        </div>
+        <div>
+          <div class="brand-title">Anti-Gravity <span class="text-gradient">AI</span></div>
+          <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">SaaS Enterprise 2035</div>
+        </div>
+      </div>
+
+      <ul class="nav-list">
+        <li class="nav-item active" data-tab="dashboard">
+          <a href="#"><i class="fas fa-chart-line"></i> <span class="nav-text">Dashboard</span></a>
+        </li>
+        <li class="nav-item" data-tab="resumes">
+          <a href="#"><i class="fas fa-cloud-upload-alt"></i> <span class="nav-text">Resume Parser</span></a>
+        </li>
+        <li class="nav-item" data-tab="screening">
+          <a href="#"><i class="fas fa-brain"></i> <span class="nav-text">AI JD Matcher</span></a>
+        </li>
+        <li class="nav-item" data-tab="candidates">
+          <a href="#"><i class="fas fa-users"></i> <span class="nav-text">Candidate Pipeline</span></a>
+        </li>
+        <li class="nav-item" data-tab="jobs">
+          <a href="#"><i class="fas fa-briefcase"></i> <span class="nav-text">Job Descriptions</span></a>
+        </li>
+        <li class="nav-item" data-tab="interviews">
+          <a href="#"><i class="fas fa-calendar-alt"></i> <span class="nav-text">Interview Hub</span></a>
+        </li>
+        <li class="nav-item" data-tab="analytics">
+          <a href="#"><i class="fas fa-chart-pie"></i> <span class="nav-text">Analytics Studio</span></a>
+        </li>
+        <li class="nav-item rbac-admin-only" data-tab="admin">
+          <a href="#"><i class="fas fa-user-shield"></i> <span class="nav-text">Admin Control</span></a>
+        </li>
+        <li class="nav-item" data-tab="reports">
+          <a href="#"><i class="fas fa-file-export"></i> <span class="nav-text">Export Reports</span></a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Topbar Navbar -->
+      <header class="topbar-ag">
+        <div class="topbar-search">
+          <i class="fas fa-search"></i>
+          <input type="text" id="global-search-input" placeholder="Global Search candidates, skills, jobs...">
+        </div>
+
+        <div class="topbar-controls">
+          <!-- Role Switcher Simulation -->
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 12px; color: var(--text-muted); text-transform: uppercase;">RBAC Role:</span>
+            <select id="role-simulation-select" class="role-badge-select">
+              <option value="Super Admin">Super Admin</option>
+              <option value="HR Manager">HR Manager</option>
+              <option value="Recruiter" selected>Recruiter</option>
+              <option value="Interviewer">Interviewer</option>
+              <option value="Candidate">Candidate</option>
+            </select>
+          </div>
+
+          <!-- User Profile -->
+          <div style="display: flex; align-items: center; gap: 12px; padding-left: 16px; border-left: 1px solid rgba(255,255,255,0.1);">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" style="width: 38px; height: 38px; border-radius: 50%; border: var(--border-glow-cyan);">
+            <div>
+              <div id="user-profile-name" style="font-size: 14px; font-weight: 600; color: #fff;">Marcus Sterling</div>
+              <div id="user-profile-role" style="font-size: 11px; color: var(--color-cyan);">Lead Recruiter</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Views Container -->
+      <main class="content-body">
+
+        <!-- 1. DASHBOARD VIEW -->
+        <section id="view-dashboard" class="tab-view">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h1 style="font-size: 28px; font-weight: 700; color: #fff;">Enterprise Recruitment Overview</h1>
+              <p style="color: var(--text-secondary); font-size: 14px;">Real-time AI screening metrics, applicant pipeline & predictive analytics.</p>
+            </div>
+            <button class="btn-ag btn-ag-primary" onclick="App.switchTab('resumes')">
+              <i class="fas fa-plus"></i> Upload New Resumes
+            </button>
+          </div>
+
+          <!-- Animated Metric Stat Cards -->
+          <div class="grid-4" style="margin-bottom: 32px;">
+            <div class="glass-panel stat-card">
+              <div class="stat-icon-wrapper"><i class="fas fa-users"></i></div>
+              <div>
+                <div class="stat-value" id="stat-total-candidates">284</div>
+                <div class="stat-label">Total Applicants</div>
+              </div>
+            </div>
+
+            <div class="glass-panel stat-card">
+              <div class="stat-icon-wrapper" style="color: var(--color-violet); border-color: rgba(138,43,226,0.4);"><i class="fas fa-file-invoice"></i></div>
+              <div>
+                <div class="stat-value" id="stat-new-applications">42</div>
+                <div class="stat-label">New Applications</div>
+              </div>
+            </div>
+
+            <div class="glass-panel stat-card">
+              <div class="stat-icon-wrapper" style="color: var(--color-emerald); border-color: rgba(0,255,157,0.4);"><i class="fas fa-user-check"></i></div>
+              <div>
+                <div class="stat-value" id="stat-shortlisted">68</div>
+                <div class="stat-label">Shortlisted</div>
+              </div>
+            </div>
+
+            <div class="glass-panel stat-card">
+              <div class="stat-icon-wrapper" style="color: var(--color-rose); border-color: rgba(255,42,109,0.4);"><i class="fas fa-user-times"></i></div>
+              <div>
+                <div class="stat-value" id="stat-rejected">31</div>
+                <div class="stat-label">Rejected</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-4" style="margin-bottom: 32px;">
+            <div class="glass-panel stat-card">
+              <div class="stat-icon-wrapper"><i class="fas fa-calendar-check"></i></div>
+              <div>
+                <div class="stat-value" id="stat-interviews">18</div>
+                <div class="stat-label">Interviews Scheduled</div>
+              </div>
+            </div>
+
+            <div class="glass-panel stat-card">
+              <div class="stat-icon-wrapper" style="color: var(--color-emerald);"><i class="fas fa-award"></i></div>
+              <div>
+                <div class="stat-value" id="stat-offers">9</div>
+                <div class="stat-label">Offers Sent</div>
+              </div>
+            </div>
+
+            <div class="glass-panel stat-card">
+              <div class="stat-icon-wrapper"><i class="fas fa-star"></i></div>
+              <div>
+                <div class="stat-value" id="stat-avg-ats">86.4%</div>
+                <div class="stat-label">Average ATS Score</div>
+              </div>
+            </div>
+
+            <div class="glass-panel stat-card">
+              <div class="stat-icon-wrapper" style="color: var(--color-violet);"><i class="fas fa-briefcase"></i></div>
+              <div>
+                <div class="stat-value" id="stat-avg-exp">4.8 yrs</div>
+                <div class="stat-label">Average Experience</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Stream & Pipeline Widget -->
+          <div class="grid-2">
+            <div class="glass-panel" style="padding: 24px;">
+              <h3 style="font-size: 18px; color: #fff; margin-bottom: 16px;">Recruitment Pipeline Stage Breakdown</h3>
+              <div style="display: flex; flex-direction: column; gap: 16px;">
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+                    <span>AI Screened Applicants</span>
+                    <span class="text-cyan">210 / 284</span>
+                  </div>
+                  <div style="height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 74%; height: 100%; background: var(--color-cyan);"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+                    <span>Shortlisted Candidates</span>
+                    <span class="text-emerald">68 / 210</span>
+                  </div>
+                  <div style="height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 32%; height: 100%; background: var(--color-emerald);"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+                    <span>Interview Stage</span>
+                    <span class="text-violet">18 / 68</span>
+                  </div>
+                  <div style="height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 26%; height: 100%; background: var(--color-violet);"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-panel" style="padding: 24px;">
+              <h3 style="font-size: 18px; color: #fff; margin-bottom: 16px;">Recent Screening Activities</h3>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 13px;">
+                <li style="padding: 10px; background: rgba(255,255,255,0.02); border-radius: 8px; border-left: 3px solid var(--color-cyan);">
+                  <strong style="color: #fff;">Alex Rivera</strong> matched 92% against <em>Senior AI Engineer</em>.
+                  <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">10 minutes ago</div>
+                </li>
+                <li style="padding: 10px; background: rgba(255,255,255,0.02); border-radius: 8px; border-left: 3px solid var(--color-emerald);">
+                  <strong style="color: #fff;">Sophia Lin</strong> moved to <em>Interview Scheduled</em>.
+                  <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">1 hour ago</div>
+                </li>
+                <li style="padding: 10px; background: rgba(255,255,255,0.02); border-radius: 8px; border-left: 3px solid var(--color-violet);">
+                  <strong style="color: #fff;">David Miller</strong> resume uploaded and parsed (PDF).
+                  <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">3 hours ago</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. RESUME UPLOAD & PARSER VIEW -->
+        <section id="view-resumes" class="tab-view" style="display: none;">
+          <h1 style="font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px;">AI Resume Upload & Entity Parser</h1>
+          <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">Supports PDF, DOCX, TXT, and Image Resumes with OCR Text Extraction.</p>
+
+          <div class="glass-panel" style="padding: 32px;">
+            <div id="resume-dropzone" class="dropzone-area">
+              <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: var(--color-cyan); margin-bottom: 16px;"></i>
+              <h3 style="font-size: 20px; color: #fff;">Drag & Drop Resume Files Here</h3>
+              <p style="color: var(--text-secondary); font-size: 14px; margin-top: 6px;">or click to browse from your device</p>
+              <div style="margin-top: 16px;">
+                <span class="badge badge-cyan">PDF</span>
+                <span class="badge badge-violet">DOCX</span>
+                <span class="badge badge-emerald">TXT</span>
+                <span class="badge badge-rose">PNG / JPG OCR</span>
+              </div>
+              <input type="file" id="resume-file-input" style="display: none;" accept=".pdf,.docx,.doc,.txt,.png,.jpg,.jpeg">
+            </div>
+
+            <!-- Upload Progress Bar -->
+            <div id="upload-progress-container" style="display: none; margin-top: 24px;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+                <span id="upload-progress-text" style="color: var(--color-cyan);">Uploading resume...</span>
+              </div>
+              <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+                <div id="upload-progress-bar" style="width: 0%; height: 100%; background: var(--gradient-neon); transition: width 0.3s ease;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parsed Candidate Drawer Preview -->
+          <div id="parsed-result-drawer" style="display: none;">
+            <div id="parsed-candidate-content"></div>
+          </div>
+        </section>
+
+        <!-- 3. AI JD MATCHER VIEW -->
+        <section id="view-screening" class="tab-view" style="display: none;">
+          <h1 style="font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px;">AI Resume Screening & JD Matcher</h1>
+          <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">Multi-dimensional compatibility algorithm comparing applicant credentials against job requirement parameters.</p>
+
+          <div class="glass-panel" style="padding: 24px;">
+            <div class="grid-2" style="align-items: center;">
+              <div>
+                <label style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase;">Select Candidate:</label>
+                <select id="screen-candidate-select" class="role-badge-select" style="width: 100%; margin-top: 6px; padding: 12px; font-size: 14px;">
+                  <!-- Options populated dynamically -->
+                </select>
+              </div>
+
+              <div>
+                <label style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase;">Select Job Description:</label>
+                <select id="screen-job-select" class="role-badge-select" style="width: 100%; margin-top: 6px; padding: 12px; font-size: 14px;">
+                  <!-- Options populated dynamically -->
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+              <button id="btn-run-ai-match" class="btn-ag btn-ag-primary" style="padding: 14px 32px; font-size: 16px;">
+                <i class="fas fa-robot"></i> Run AI Match Analysis
+              </button>
+            </div>
+          </div>
+
+          <!-- AI Results Container -->
+          <div id="ai-match-results-container"></div>
+        </section>
+
+        <!-- 4. CANDIDATES PIPELINE VIEW -->
+        <section id="view-candidates" class="tab-view" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h1 style="font-size: 28px; font-weight: 700; color: #fff;">Candidate Pipeline Hub</h1>
+              <p style="color: var(--text-secondary); font-size: 14px;">Filter, manage, bookmark, and update candidate hiring stages.</p>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <button class="btn-ag btn-ag-secondary" onclick="CandidateManager.applyBulkAction('Shortlist')">
+                <i class="fas fa-check"></i> Bulk Shortlist
+              </button>
+              <button class="btn-ag btn-ag-secondary" onclick="CandidateManager.applyBulkAction('Reject')">
+                <i class="fas fa-times"></i> Bulk Reject
+              </button>
+            </div>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="glass-panel" style="padding: 16px 24px; margin-bottom: 24px; display: flex; gap: 16px; align-items: center;">
+            <input type="text" id="candidate-search-input" placeholder="Filter candidates by name or skill..." class="topbar-search" style="width: 300px; padding: 10px 16px;" oninput="CandidateManager.loadCandidates()">
+            <select id="candidate-status-filter" class="role-badge-select" onchange="CandidateManager.loadCandidates()">
+              <option value="">All Statuses</option>
+              <option value="New">New</option>
+              <option value="Parsed">Parsed</option>
+              <option value="Shortlisted">Shortlisted</option>
+              <option value="Interview Scheduled">Interview Scheduled</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+
+          <!-- Data Table -->
+          <div class="glass-panel" style="padding: 16px;">
+            <table class="ag-table">
+              <thead>
+                <tr>
+                  <th style="width: 40px;"><input type="checkbox"></th>
+                  <th>Candidate</th>
+                  <th>Status</th>
+                  <th>ATS Score</th>
+                  <th>Experience</th>
+                  <th>Core Skills</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="candidates-table-body">
+                <!-- Populated via CandidateManager -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. JOB DESCRIPTIONS VIEW -->
+        <section id="view-jobs" class="tab-view" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h1 style="font-size: 28px; font-weight: 700; color: #fff;">Job Description Module</h1>
+              <p style="color: var(--text-secondary); font-size: 14px;">Manage open requisitions, required skills, and keyword targets.</p>
+            </div>
+            <button class="btn-ag btn-ag-primary" onclick="document.getElementById('create-job-modal').classList.add('active')">
+              <i class="fas fa-plus"></i> Create Job Description
+            </button>
+          </div>
+
+          <div id="jobs-list-container"></div>
+        </section>
+
+        <!-- 6. INTERVIEW HUB VIEW -->
+        <section id="view-interviews" class="tab-view" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h1 style="font-size: 28px; font-weight: 700; color: #fff;">Interview Management Calendar</h1>
+              <p style="color: var(--text-secondary); font-size: 14px;">Schedule candidate evaluations, view meeting links, and submit ratings.</p>
+            </div>
+            <button class="btn-ag btn-ag-primary" onclick="document.getElementById('schedule-modal').classList.add('active')">
+              <i class="fas fa-calendar-plus"></i> Schedule Interview
+            </button>
+          </div>
+
+          <div id="interviews-list-container"></div>
+        </section>
+
+        <!-- 7. ANALYTICS STUDIO VIEW -->
+        <section id="view-analytics" class="tab-view" style="display: none;">
+          <h1 style="font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px;">Analytics Studio</h1>
+          <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">Chart.js interactive visualizations for candidate skills, ATS score trends, and funnel metrics.</p>
+
+          <div class="grid-2" style="margin-bottom: 24px;">
+            <div class="glass-panel" style="padding: 24px;">
+              <h3 style="font-size: 16px; color: #fff; margin-bottom: 16px;">Candidate Competency Radar Matrix</h3>
+              <canvas id="radar-chart-canvas"></canvas>
+            </div>
+
+            <div class="glass-panel" style="padding: 24px;">
+              <h3 style="font-size: 16px; color: #fff; margin-bottom: 16px;">Hiring Pipeline Funnel</h3>
+              <canvas id="pie-chart-canvas"></canvas>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 24px;">
+            <h3 style="font-size: 16px; color: #fff; margin-bottom: 16px;">Skill Demand & Applicant Distribution</h3>
+            <canvas id="bar-chart-canvas" style="max-height: 300px;"></canvas>
+          </div>
+        </section>
+
+        <!-- 8. ADMIN CONTROL VIEW -->
+        <section id="view-admin" class="tab-view" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h1 style="font-size: 28px; font-weight: 700; color: #fff;">Admin Control Center</h1>
+              <p style="color: var(--text-secondary); font-size: 14px;">System audit logs, RBAC management, and database snapshots.</p>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <button class="btn-ag btn-ag-primary" onclick="AdminPanel.triggerBackup()">
+                <i class="fas fa-download"></i> System Backup
+              </button>
+              <button class="btn-ag btn-ag-secondary" onclick="AdminPanel.triggerRestore()">
+                <i class="fas fa-undo"></i> Restore Snapshot
+              </button>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 24px;">
+            <h3 style="font-size: 18px; color: #fff; margin-bottom: 16px;">System Activity Audit Trail</h3>
+            <table class="ag-table">
+              <thead>
+                <tr>
+                  <th>Action</th>
+                  <th>User & Role</th>
+                  <th>Details</th>
+                  <th>IP Address</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="audit-logs-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 9. EXPORT REPORTS VIEW -->
+        <section id="view-reports" class="tab-view" style="display: none;">
+          <h1 style="font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px;">Export System Reports</h1>
+          <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">Download comprehensive candidate, ATS score, and recruitment data in CSV, JSON, or PDF formats.</p>
+
+          <div class="grid-3">
+            <div class="glass-panel" style="padding: 32px; text-align: center;">
+              <i class="fas fa-file-csv" style="font-size: 48px; color: var(--color-cyan); margin-bottom: 16px;"></i>
+              <h3 style="font-size: 18px; color: #fff;">CSV Spreadsheet</h3>
+              <p style="font-size: 13px; color: var(--text-secondary); margin: 8px 0 20px 0;">Export raw candidate profiles & ATS scores for Excel processing.</p>
+              <a href="/api/reports/csv" class="btn-ag btn-ag-primary" target="_blank">
+                <i class="fas fa-download"></i> Download CSV
+              </a>
+            </div>
+
+            <div class="glass-panel" style="padding: 32px; text-align: center;">
+              <i class="fas fa-code" style="font-size: 48px; color: var(--color-violet); margin-bottom: 16px;"></i>
+              <h3 style="font-size: 18px; color: #fff;">JSON Raw Data</h3>
+              <p style="font-size: 13px; color: var(--text-secondary); margin: 8px 0 20px 0;">Export full structured candidate JSON objects with AI analysis.</p>
+              <a href="/api/reports/json" class="btn-ag btn-ag-secondary" target="_blank">
+                <i class="fas fa-download"></i> Download JSON
+              </a>
+            </div>
+
+            <div class="glass-panel" style="padding: 32px; text-align: center;">
+              <i class="fas fa-file-pdf" style="font-size: 48px; color: var(--color-emerald); margin-bottom: 16px;"></i>
+              <h3 style="font-size: 18px; color: #fff;">Printable PDF Report</h3>
+              <p style="font-size: 13px; color: var(--text-secondary); margin: 8px 0 20px 0;">Generate executive PDF summary report for hiring managers.</p>
+              <a href="/api/reports/pdf" class="btn-ag btn-ag-primary" target="_blank">
+                <i class="fas fa-print"></i> Generate PDF
+              </a>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- Candidate Profile Modal -->
+  <div id="candidate-profile-modal" class="ag-modal-overlay">
+    <div class="glass-panel ag-modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 20px; color: #fff;">Candidate Details</h3>
+        <button class="modal-close" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">&times;</button>
+      </div>
+      <div id="candidate-profile-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Create Job Description Modal -->
+  <div id="create-job-modal" class="ag-modal-overlay">
+    <div class="glass-panel ag-modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="font-size: 20px; color: #fff;">Create New Job Requisition</h3>
+        <button class="modal-close" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="JobManager.handleCreateJob(event)">
+        <div style="margin-bottom: 14px;">
+          <label style="font-size: 12px; color: var(--text-secondary);">Job Title</label>
+          <input type="text" id="job-title-input" required placeholder="e.g. Senior Full Stack AI Engineer" class="topbar-search" style="width: 100%; margin-top: 4px; padding: 10px;">
+        </div>
+        <div style="margin-bottom: 14px;">
+          <label style="font-size: 12px; color: var(--text-secondary);">Department</label>
+          <input type="text" id="job-department-input" placeholder="Engineering" class="topbar-search" style="width: 100%; margin-top: 4px; padding: 10px;">
+        </div>
+        <div style="margin-bottom: 14px;">
+          <label style="font-size: 12px; color: var(--text-secondary);">Required Skills (comma separated)</label>
+          <input type="text" id="job-skills-input" placeholder="JavaScript, Node.js, Express, MongoDB, Python" class="topbar-search" style="width: 100%; margin-top: 4px; padding: 10px;">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 12px; color: var(--text-secondary);">Job Description</label>
+          <textarea id="job-desc-input" rows="4" required style="width: 100%; margin-top: 4px; padding: 10px; background: rgba(255,255,255,0.05); border: var(--border-glass); border-radius: 12px; color: #fff; font-family: var(--font-main);"></textarea>
+        </div>
+        <button type="submit" class="btn-ag btn-ag-primary" style="width: 100%;">Create Job Description</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Schedule Interview Modal -->
+  <div id="schedule-modal" class="ag-modal-overlay">
+    <div class="glass-panel ag-modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="font-size: 20px; color: #fff;">Schedule Candidate Interview</h3>
+        <button class="modal-close" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="InterviewScheduler.handleSchedule(event)">
+        <div style="margin-bottom: 14px;">
+          <label style="font-size: 12px; color: var(--text-secondary);">Candidate Name</label>
+          <input type="text" id="intv-candidate-name" required placeholder="Alex Rivera" class="topbar-search" style="width: 100%; margin-top: 4px; padding: 10px;">
+        </div>
+        <div style="margin-bottom: 14px;">
+          <label style="font-size: 12px; color: var(--text-secondary);">Job Requisition</label>
+          <input type="text" id="intv-job-title" required placeholder="Senior AI Engineer" class="topbar-search" style="width: 100%; margin-top: 4px; padding: 10px;">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 12px; color: var(--text-secondary);">Date & Time</label>
+          <input type="datetime-local" id="intv-datetime" required class="topbar-search" style="width: 100%; margin-top: 4px; padding: 10px; color-scheme: dark;">
+        </div>
+        <button type="submit" class="btn-ag btn-ag-primary" style="width: 100%;">Confirm & Schedule Meeting</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Interview Scorecard Feedback Modal -->
+  <div id="feedback-modal" class="ag-modal-overlay">
+    <div class="glass-panel ag-modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="font-size: 20px; color: #fff;">Submit Scorecard Feedback</h3>
+        <button class="modal-close" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="event.preventDefault(); App.showToast('Scorecard feedback recorded.', 'success'); App.closeModals();">
+        <div style="margin-bottom: 14px;">
+          <label style="font-size: 12px; color: var(--text-secondary);">Technical Depth Rating (1 - 5)</label>
+          <input type="number" min="1" max="5" value="5" class="topbar-search" style="width: 100%; margin-top: 4px; padding: 10px;">
+        </div>
+        <div style="margin-bottom: 14px;">
+          <label style="font-size: 12px; color: var(--text-secondary);">Feedback Notes</label>
+          <textarea rows="3" placeholder="Candidate demonstrated strong knowledge of microservices and system design..." class="topbar-search" style="width: 100%; margin-top: 4px; padding: 10px;"></textarea>
+        </div>
+        <button type="submit" class="btn-ag btn-ag-primary" style="width: 100%;">Submit Feedback</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999;"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="assets/js/anti-gravity-fx.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/resume-uploader.js"></script>
+  <script src="assets/js/screening-engine.js"></script>
+  <script src="assets/js/candidate-manager.js"></script>
+  <script src="assets/js/job-manager.js"></script>
+  <script src="assets/js/interview-scheduler.js"></script>
+  <script src="assets/js/analytics-view.js"></script>
+  <script src="assets/js/admin-panel.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

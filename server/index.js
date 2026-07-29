@@ -22,8 +22,15 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use('/api/', apiLimiter);
 
+const fs = require('fs');
+
 // Serve Static Frontend Assets & Uploaded Files
-app.use(express.static(path.join(__dirname, '../client')));
+const clientPath = fs.existsSync(path.join(__dirname, '../client/index.html'))
+  ? path.join(__dirname, '../client')
+  : path.join(__dirname, '..');
+
+app.use(express.static(clientPath));
+app.use(express.static(path.join(__dirname, '..')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Register API Routes
@@ -44,7 +51,10 @@ app.get(/.*/, (req, res, next) => {
   if (req.path.startsWith('/api')) {
     return next();
   }
-  res.sendFile(path.join(__dirname, '../client/index.html'));
+  const indexPath = fs.existsSync(path.join(__dirname, '../client/index.html'))
+    ? path.join(__dirname, '../client/index.html')
+    : path.join(__dirname, '../index.html');
+  res.sendFile(indexPath);
 });
 
 // Centralized Error Handling Middleware

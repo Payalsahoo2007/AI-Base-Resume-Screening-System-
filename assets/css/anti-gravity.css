@@ -1,0 +1,209 @@
+/* ==========================================================================
+   ANTI-GRAVITY COSMIC DESIGN SYSTEM (2035 SaaS Aesthetic)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Color Palette */
+  --bg-space: #070a13;
+  --bg-deep-space: #0d1222;
+  --bg-surface: rgba(18, 26, 47, 0.65);
+  --bg-surface-hover: rgba(26, 38, 69, 0.75);
+
+  --color-cyan: #00f3ff;
+  --color-violet: #8a2be2;
+  --color-neon-blue: #0072ff;
+  --color-emerald: #00ff9d;
+  --color-amber: #ffaa00;
+  --color-rose: #ff2a6d;
+
+  --gradient-neon: linear-gradient(135deg, #00f3ff 0%, #8a2be2 100%);
+  --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  --gradient-glow: radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.15), transparent 70%);
+
+  --border-glass: 1px solid rgba(255, 255, 255, 0.1);
+  --border-glow-cyan: 1px solid rgba(0, 243, 255, 0.4);
+  --border-glow-violet: 1px solid rgba(138, 43, 226, 0.4);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --shadow-anti-gravity: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 243, 255, 0.1);
+  --shadow-neon-cyan: 0 0 20px rgba(0, 243, 255, 0.3);
+  --shadow-neon-violet: 0 0 20px rgba(138, 43, 226, 0.3);
+
+  --font-main: 'Outfit', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-space);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Cosmic Background Particle Canvas */
+#anti-gravity-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Ambient Cosmic Nebulae Blobs */
+.nebula-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.25;
+  animation: floatNebula 20s ease-in-out infinite alternate;
+}
+
+.nebula-1 {
+  top: -10%;
+  left: 10%;
+  width: 600px;
+  height: 600px;
+  background: var(--color-cyan);
+}
+
+.nebula-2 {
+  bottom: -15%;
+  right: 5%;
+  width: 700px;
+  height: 700px;
+  background: var(--color-violet);
+}
+
+@keyframes floatNebula {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -60px) scale(1.1); }
+  100% { transform: translate(-30px, 30px) scale(0.95); }
+}
+
+/* Floating Glassmorphism Panels */
+.glass-panel {
+  background: var(--bg-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--border-glass);
+  border-radius: 20px;
+  box-shadow: var(--shadow-anti-gravity);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-panel:hover {
+  border: var(--border-glow-cyan);
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 243, 255, 0.25);
+}
+
+/* Neon Text & Badges */
+.text-cyan { color: var(--color-cyan); }
+.text-violet { color: var(--color-violet); }
+.text-emerald { color: var(--color-emerald); }
+.text-gradient {
+  background: var(--gradient-neon);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Floating & Entrance Keyframe Animations */
+.anti-gravity-float {
+  animation: antiGravityFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes antiGravityFloat {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-10px); }
+}
+
+.fade-in-up {
+  animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInSlideUp {
+  0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.fade-in-view {
+  animation: fadeInView 0.35s ease forwards;
+}
+
+@keyframes fadeInView {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Pulsing Badge & Score Glow */
+.pulse-glow-cyan { animation: pulseCyan 2s infinite alternate; }
+.pulse-glow-emerald { animation: pulseEmerald 2s infinite alternate; }
+.pulse-glow-rose { animation: pulseRose 2s infinite alternate; }
+
+@keyframes pulseCyan {
+  0% { box-shadow: 0 0 10px rgba(0, 243, 255, 0.3); }
+  100% { box-shadow: 0 0 25px rgba(0, 243, 255, 0.8), 0 0 40px rgba(0, 243, 255, 0.4); }
+}
+
+@keyframes pulseEmerald {
+  0% { box-shadow: 0 0 10px rgba(0, 255, 157, 0.3); }
+  100% { box-shadow: 0 0 25px rgba(0, 255, 157, 0.8), 0 0 40px rgba(0, 255, 157, 0.4); }
+}
+
+@keyframes pulseRose {
+  0% { box-shadow: 0 0 10px rgba(255, 42, 109, 0.3); }
+  100% { box-shadow: 0 0 25px rgba(255, 42, 109, 0.8), 0 0 40px rgba(255, 42, 109, 0.4); }
+}
+
+/* Smooth Progress Bar Fill */
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Pop-in Keyword Tags */
+.pop-in-tag {
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep-space);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 243, 255, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-cyan);
+}
